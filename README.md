@@ -1,4 +1,4 @@
-# voice-recognition-project-2
+# voice-recognition-project
 1. Project Overview:
 Define the purpose of your voice recognition system. Is it for voice commands, transcription, identification, or something else?
 2. Technology Stack:
