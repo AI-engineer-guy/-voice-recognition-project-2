@@ -1,16 +1,31 @@
-# voice-recognition-project
-1. Project Overview:
-Define the purpose of your voice recognition system. Is it for voice commands, transcription, identification, or something else?
-2. Technology Stack:
-Choose a programming language (Python is commonly used).
-Select a suitable framework or library for speech processing (e.g., SpeechRecognition, pocketsphinx, or a deep learning framework like TensorFlow or PyTorch).
-Consider using pre-trained models for quicker development.
-3. Data Collection:
-Collect a diverse dataset for training your model. Include various accents, languages, and speaking styles.
-Use libraries like pyaudio or tools like Audacity for recording and managing audio data.
-4. Data Preprocessing:
-Convert audio data to a suitable format (e.g., WAV).
-Extract relevant features (MFCC - Mel Frequency Cepstral Coefficients are commonly used in speech processing).
-5. Model Selection:
-Decide on the type of model (e.g., Hidden Markov Models, deep neural networks, or a hybrid approach).
-For advanced applications, consider using pre-trained models like Wav2Vec or DeepSpeech.
+# voice-recognition-project program
+import sounddevice as sd
+import speech_recognition as sr
+
+def recognize_from_microphone():
+    recognizer = sr.Recognizer()
+
+    # Set the sample rate and duration for recording
+    sample_rate = 44100
+    duration = 10
+    print("Say something:")
+    # Record audio from the microphone
+    audio_data = sd.rec(int(sample_rate * duration), samplerate=sample_rate, channels=1, dtype='int16')
+    sd.wait()
+    
+    
+    # Convert NumPy array to AudioData
+    audio_data = sr.AudioData(audio_data.tobytes(), sample_rate, 2)
+    print("Recognizing audio...")
+    # Recognize speech from the recorded audio
+    try:
+        #print("Say something:")
+        text = recognizer.recognize_google(audio_data, show_all=False)
+        print("You said: " + text)
+    except sr.UnknownValueError:
+        print("Google Web Speech API could not understand audio")
+    except sr.RequestError as e:
+        print("Could not request results from Google Web Speech API; {0}".format(e))
+
+# Call the function to start real-time recognition
+recognize_from_microphone()
